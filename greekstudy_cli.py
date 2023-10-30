@@ -15,7 +15,7 @@ def login(u:str, p:str) -> requests.Response:
     r = requests.post(post_url, data=payload)
     return r
 
-"""
+""" DEPRECATED
 def get_hours(r) -> (float, float):
     url = "https://mygreekstudy.com/welcome.php"
     if r.url != url:
@@ -70,7 +70,7 @@ def get_credentials() -> dict:
             }
     return creds
 
-# oh my god they dont even authenticate, we can just post hours as long as we know their id, and everyone's info is WIDE OPEN??
+# wow... they dont even authenticate, we can just post hours as long as we know their id, and everyone's info is WIDE OPEN??
 def dump_users(name:str=None, userID:int=None):
     creds = get_credentials()
     r = login(creds["username"], creds["password"])
@@ -88,7 +88,6 @@ def dump_users(name:str=None, userID:int=None):
             users.append("{}: {} ({}hrs)".format(user["member"], user["id"], user["hours"]))
         elif name and name.lower() in user["member"].lower():
             users.append("{}: {} ({}hrs)".format(user["member"], user["id"], user["hours"]))
-
     print("\n".join(users))
 
 
@@ -109,8 +108,6 @@ def main():
     elif choice == "4":
         userID = input("Enter userID: ")
         dump_users(userID=userID)
-        
-        
     return
 
 if __name__ == "__main__":
