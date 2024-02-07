@@ -5,7 +5,9 @@
     <div class="c-jumbotron w-50">
       <p>Please link your GreekStudy account to continue</p>
       <a href="{% url "greekstudy_account" %}" class="btn btn-primary px-5">Link GreekStudy Account</a>
-      <p class="help-text mt-3"><b>NOTE:</b> For your safety, please change your password on GreekStudy to something unique before providing it here. This isn't mandatory but HIGHLY recommended. Stay safe :)</p>
+      <p class="help-text mt-3">
+        <b>NOTE:</b> For your safety, please change your password on GreekStudy to something unique before providing it here. This isn't mandatory but HIGHLY recommended. Stay safe :)
+      </p>
       {# TODO Add advanced mode that doesn't require creds, since we dont need to login if user knows their GS ID #}
     </div>
   {% else %}
@@ -13,6 +15,4 @@
       <a href="{% url "hours" %}" class="btn btn-primary px-5">Add Hours</a>
     </div>
   {% endif %}
-
-
 {% endblock content %}

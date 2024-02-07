@@ -1,14 +1,15 @@
 import json
 
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
+from django.shortcuts import render
 from django.utils.decorators import method_decorator
+from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
 
-from .tasks import get_user_id
-from django.shortcuts import render
-from django.views import generic
-from django.contrib.auth.mixins import LoginRequiredMixin
 from celery.result import AsyncResult
+
+from .tasks import get_user_id
 
 
 class IndexView(generic.TemplateView):

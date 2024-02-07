@@ -1,11 +1,13 @@
-import os
-import time
-import requests
 import json
+import os
+
+import requests
 from bs4 import BeautifulSoup
 
 
 class GreekStudy:
+    TIMEOUT = 5
+
     userID = None
     users = None
     r = None
@@ -19,7 +21,7 @@ class GreekStudy:
             "username": email,
             "password": password,
         }
-        self.r = requests.post(post_url, data=payload)
+        self.r = requests.post(post_url, data=payload, timeout=self.TIMEOUT)
         # TODO make sure the login was successful, we could try to get the user id
 
     def get_users(self) -> list:
@@ -30,7 +32,7 @@ class GreekStudy:
         session = requests.Session()
         headers = self.r.request.headers
         url = "https://mygreekstudy.com/data.php"
-        self.r = session.get(url, headers=headers)
+        self.r = session.get(url, headers=headers, timeout=self.TIMEOUT)
         data = json.loads(self.r.text)
         # data = [{'id': '265609', 'member': 'Dylan Gunn', 'hours': '13.23'}, {'id': '220046', 'member': 'Josh Mercer', 'hours': '12.50'} ...
         # want to transform into a list of dicts
@@ -75,12 +77,12 @@ class GreekStudy:
         headers = self.r.request.headers
         cookies = self.r.cookies
         url = "https://mygreekstudy.com/welcome.php"
-        self.r = requests.get(url, headers=headers, cookies=cookies)
+        self.r = requests.get(url, headers=headers, cookies=cookies, timeout=self.TIMEOUT)
 
         bs = BeautifulSoup(self.r.text, "html.parser")
         try:
             first, last = bs.select("#nav-accordion > div > h5")[0].text.strip().split(" ")
-        except:
+        except:  # noqa
             return "error"
 
         # now that we have the first and last name, we can get the user id with the dump_users function
@@ -173,4 +175,4 @@ class GreekStudy:
             "sentUserID": sentUserID,
             "minute": str(minutes),
         }
-        r = requests.post(post_url, data=payload)
+        requests.post(post_url, data=payload, timeout=self.TIMEOUT)

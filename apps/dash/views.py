@@ -1,10 +1,9 @@
-from django.shortcuts import render, redirect
-from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
-
-from .forms import GreekStudyAccountSetupForm
+from django.shortcuts import redirect, render
+from django.views import generic
 
 from ..base.utils.gs import GreekStudy
+from .forms import GreekStudyAccountSetupForm
 
 
 class IndexView(LoginRequiredMixin, generic.TemplateView):

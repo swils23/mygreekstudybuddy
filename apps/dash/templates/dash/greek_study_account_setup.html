@@ -27,47 +27,46 @@
 
       // Add event listener to the "Get" button
       getButton.addEventListener('click', function() {
-          console.log('Get button clicked')
-          var gs_email_value = gs_email.value;
-          var gs_password_value = gs_password.value;
-          fetch('/trigger-task/', {
-              method: 'POST',
-              headers: {
-                  'Content-Type': 'application/json',
-                  'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
-              },
-              body: JSON.stringify({
-                  'gs_email': gs_email_value,
-                  'gs_password': gs_password_value
-              })
+        console.log('Get button clicked')
+        var gs_email_value = gs_email.value;
+        var gs_password_value = gs_password.value;
+        fetch('/trigger-task/', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+            },
+            body: JSON.stringify({
+              'gs_email': gs_email_value,
+              'gs_password': gs_password_value
+            })
           })
           .then(response => response.json())
           .then(data => {
-              // Start polling the /get-task-result/ URL every second
-              var intervalId = setInterval(function() {
-                  fetch('/get-task-result/?task_id=' + data.task_id)
-                      .then(response => response.json())
-                      .then(data => {
-                          // If the task is ready, display the result in the gs_userID field and stop polling
-                          if (data.result) {
-                              document.getElementById('gs_userID').value = data.result;
-                              // django fix
-                              document.getElementById('id_gs_userID').value = data.result;
-                              clearInterval(intervalId);
-                          }
-                      });
-              }, 1000);
+            // Start polling the /get-task-result/ URL every second
+            var intervalId = setInterval(function() {
+              fetch('/get-task-result/?task_id=' + data.task_id)
+                .then(response => response.json())
+                .then(data => {
+                  // If the task is ready, display the result in the gs_userID field and stop polling
+                  if (data.result) {
+                    document.getElementById('gs_userID').value = data.result;
+                    // django fix
+                    document.getElementById('id_gs_userID').value = data.result;
+                    clearInterval(intervalId);
+                  }
+                });
+            }, 1000);
           });
       });
       // Get the form
       var form = document.querySelector('form');
-    
+
       // Add event listener to the form's submit event
       form.addEventListener('submit', function(event) {
         // Enable the gs_userID field before the form is submitted
         gs_userID.disabled = false;
       });
     });
-    
   </script>
 {% endblock script %}
