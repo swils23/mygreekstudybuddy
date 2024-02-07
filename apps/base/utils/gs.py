@@ -160,7 +160,7 @@ class GreekStudy:
             with open(".users", "w") as f:
                 json.dump(existing_users, f, indent=4)
 
-    def post_hours(self, hours: int, minutes: int, locationID: int, sentUserID: int):
+    def post_hours(self, hours: int, minutes: int, sentUserID: int, locationID=4311) -> None:
         # We can only post up to 10 hours at a time
         if hours > 10 or (hours == 10 and minutes > 0):
             print("You can only add 10 hours at a time. Will fix this eventually")

@@ -1,3 +1,5 @@
+import random
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect, render
 from django.views import generic
@@ -58,3 +60,17 @@ class GreekStudyHoursView(LoginRequiredMixin, generic.TemplateView):
         else:
             context["hours"] = "unknown"
         return context
+
+    def post(self, request, *args, **kwargs):
+        hours = request.POST.get("hours")
+
+        if hours and hours.isdigit() and (0 < int(hours) <= 9):
+            if request.user.hours >= int(hours):
+                request.user.hours -= int(hours)
+                request.user.save()
+                gs = GreekStudy()
+                # random mins to avoid detection
+                minutes = random.randint(0, 19)  # nosec
+                gs.post_hours(sentUserID=request.user.gs_userID, hours=int(hours), minutes=minutes)
+
+        return redirect("hours")

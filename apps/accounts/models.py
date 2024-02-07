@@ -12,6 +12,8 @@ class User(AbstractUser):
     gs_email = models.EmailField(null=True, blank=True)
     gs_password = models.CharField(max_length=100, null=True, blank=True)
 
+    hours = models.IntegerField(default=0)
+
     @property
     def has_linked_gs(self):
         return self.gs_userID is not None
