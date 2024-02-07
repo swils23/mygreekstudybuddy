@@ -196,6 +196,7 @@ click==8.1.7 \
     #   click-didyoumean
     #   click-plugins
     #   click-repl
+    #   uvicorn
 click-didyoumean==0.3.0 \
     --hash=sha256:a0713dc7a1de3f06bc0df5a9567ad19ead2d3d5689b434768a6145bff77c0667 \
     --hash=sha256:f184f0d851d96b6d29297354ed981b7dd71df7ff500d82fa6d11f0856bee8035
@@ -329,8 +330,8 @@ django-alive==1.2.1 \
     --hash=sha256:7c449a7ab29b7047ba522ef5ca2dc6b1be0f7db0374dd77b95eec910f9aa0c11 \
     --hash=sha256:b758f4e88084140bf40c2f1ca3371af1d3702e3bf47c9c06264f82340f5888fe
     # via -r config/requirements/prod.in
-django-allauth==0.60.1 \
-    --hash=sha256:97b0f9a1807ca812d84204328cd55c273ce4ec1835f822d8fd1a28178708f192
+django-allauth==0.61.0 \
+    --hash=sha256:e449d2378e1f33803bcf6f1ecc28439ce383de9b5c128a66aa301c4a0e71806f
     # via -r config/requirements/prod.in
 django-cache-url==3.4.5 \
     --hash=sha256:5f350759978483ab85dc0e3e17b3d53eed3394a28148f6bf0f53d11d0feb5b3c \
@@ -356,6 +357,10 @@ environs[django]==10.3.0 \
     # via
     #   -r config/requirements/prod.in
     #   environs
+h11==0.14.0 \
+    --hash=sha256:8f19fbbe99e72420ff35c00b27a34cb9937e902a8b810e2c88300c6f0a3b699d \
+    --hash=sha256:e3fe4ac4b851c468cc8363d500db52c2ead036020723024a109d37346efaa761
+    # via uvicorn
 hiredis==2.3.2 \
     --hash=sha256:01b6c24c0840ac7afafbc4db236fd55f56a9a0919a215c25a238f051781f4772 \
     --hash=sha256:02fc71c8333586871602db4774d3a3e403b4ccf6446dc4603ec12df563127cee \
@@ -667,6 +672,10 @@ urllib3==2.0.7 \
     # via
     #   botocore
     #   requests
+uvicorn==0.27.0.post1 \
+    --hash=sha256:4b85ba02b8a20429b9b205d015cbeb788a12da527f731811b643fd739ef90d5f \
+    --hash=sha256:54898fcd80c13ff1cd28bf77b04ec9dbd8ff60c5259b499b4b12bb0917f22907
+    # via -r config/requirements/prod.in
 uwsgi==2.0.23 \
     --hash=sha256:0cafda0c16f921db7fe42cfaf81b167cf884ee17350efbdd87d1ecece2d7de37
     # via -r config/requirements/prod.in
