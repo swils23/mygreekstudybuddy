@@ -11,8 +11,9 @@
   </p>
   <form method="post">
     {% csrf_token %}
-    <label for="hours">Add Hours:</label>
-    <input type="number" name="hours" min="0" max="9" step="1">
+    <label for="hours">Add Hours: <input type="number" name="hours" min="0" max="9" step="1"></label>
+    
+    
     <input type="submit" value="Add">
   </form>
   <p>
