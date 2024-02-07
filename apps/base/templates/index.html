@@ -1,0 +1,20 @@
+{% extends "layouts/base.html" %}
+
+{# djlint:off #}
+{% block title_tag %}<title>{{ SITE_NAME }}</title>{% endblock title_tag %}
+{# djlint:on #}
+{% block content %}
+  <div class="c-jumbotron w-50">
+    {% if not user.is_authenticated %}
+      <p class="text-muted">Welcome</p>
+      <p>
+        <a href="{% url 'account_login' %}" class="btn btn-primary px-5">Sign In</a>
+      </p>
+    {% else %}
+      <p class="text-muted">Welcome, {{ user.username }}</p>
+      <p>
+        <a href="{% url 'dash_index' %}" class="btn btn-primary px-5">Manage Study Hours</a>
+      </p>
+    {% endif %}
+  </div>
+{% endblock content %}
