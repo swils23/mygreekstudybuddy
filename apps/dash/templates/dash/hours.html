@@ -1,0 +1,21 @@
+{% extends "layouts/base.html" %}
+
+{% block content %}
+  <p>
+    <b>Available Credits:</b> {{ request.user.hours }} hours
+    <br>
+    <sub>Contact Sam to purchase more credits ~$0.50 = 1 hour :)</sub>
+  </p>
+  <p>
+    <b>Current Study Hours:</b> {{ hours }} hours
+  </p>
+  <form method="post">
+    {% csrf_token %}
+    <label for="hours">Add Hours:</label>
+    <input type="number" name="hours" min="0" max="9" step="1">
+    <input type="submit" value="Add">
+  </form>
+  <p>
+    <sub>NOTE: you can only add 1-9 hours at a time</sub>
+  </p>
+{% endblock content %}
