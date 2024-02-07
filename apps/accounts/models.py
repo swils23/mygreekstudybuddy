@@ -10,6 +10,9 @@ from django.db import models
 class User(AbstractUser):
     gs_userID = models.IntegerField(null=True, blank=True)
 
+    gs_email = models.EmailField(null=True, blank=True)
+    gs_password = models.CharField(max_length=100, null=True, blank=True)
+
     @property
     def has_linked_gs(self):
         return self.gs_userID is not None

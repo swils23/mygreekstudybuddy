@@ -6,7 +6,7 @@ from django.urls import URLPattern, URLResolver, include, path
 from django.views.generic import TemplateView
 
 from apps.accounts.views import NameChange
-from apps.base.views import http_404, http_500
+from apps.base.views import http_404, http_500, GetTaskResultView, TriggerTaskView
 from apps.dash.views import IndexView, GreekStudyAccountSetupView
 
 # Includes
@@ -21,7 +21,9 @@ urlpatterns += [
     path("accounts/name/", NameChange.as_view(), name="account_change_name"),
     path("accounts/", include("allauth.urls")),
     path("dash/", IndexView.as_view(), name="dash_index"),
-    path("greekstudy-account/",GreekStudyAccountSetupView.as_view(), name="greekstudy_account"),
+    path("greekstudy-account/", GreekStudyAccountSetupView.as_view(), name="greekstudy_account"),
+    path("trigger-task/", TriggerTaskView.as_view(), name="trigger-task"),
+    path("get-task-result/", GetTaskResultView.as_view(), name="get-task-result"),
 ]
 
 # Debug/Development URLs

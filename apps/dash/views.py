@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -16,17 +16,27 @@ class IndexView(LoginRequiredMixin, generic.TemplateView):
 class GreekStudyAccountSetupView(LoginRequiredMixin, generic.TemplateView):
     template_name = "dash/greek_study_account_setup.html"
 
+    def get_initial(self):
+        initial = {}
+        initial["gs_email"] = self.request.user.gs_email
+        initial["gs_password"] = self.request.user.gs_password
+        initial["gs_userID"] = self.request.user.gs_userID
+        return initial
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['form'] = GreekStudyAccountSetupForm()
+        context["form"] = GreekStudyAccountSetupForm(initial=self.get_initial())
         return context
 
     def post(self, request, *args, **kwargs):
         form = GreekStudyAccountSetupForm(request.POST)
+
         if form.is_valid():
-            request.user.first_name = form.cleaned_data['first_name']
-            request.user.last_name = form.cleaned_data['last_name']
+            request.user.gs_email = form.cleaned_data["gs_email"]
+            request.user.gs_password = form.cleaned_data["gs_password"]
+            request.user.gs_userID = form.cleaned_data["gs_userID"]
             request.user.save()
-        return super().get(request, *args, **kwargs)
-
-
+            return redirect("dash_index")
+        print(form)
+        print(str(form.errors) + "#####################")
+        return render(request, self.template_name, {"form": form})

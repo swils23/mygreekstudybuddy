@@ -200,6 +200,7 @@ CACHES = {
 # Celery configuration docs: https://docs.celeryq.dev/en/stable/getting-started/backends-and-brokers/redis.html#configuration
 CELERY_BROKER_URL = REDIS_URL
 CELERY_BROKER_TRANSPORT_OPTIONS = {"global_keyprefix": REDIS_PREFIX}
+CELERY_RESULT_BACKEND = "rpc://"
 
 # CRISPY-FORMS
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
