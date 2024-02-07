@@ -1,6 +1,6 @@
 {
-  "name": "django-base-site",
-  "description": "Django Base Site",
+  "name": "mygreekstudybuddy",
+  "description": "GreekStudy Buddy",
   "scripts": {
     "dev": "npx vite --config src/config/vite.config.js",
     "build": "npx vite build --config src/config/vite.config.js",
@@ -25,12 +25,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/epicserve/django-base-site.git"
+    "url": "git+https://github.com/swils23/mygreekstudybuddy.git"
   },
-  "author": "Brent O'Connor",
+  "author": "Sam Wilson",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/epicserve/django-base-site/issues"
+    "url": "https://github.com/swils23/mygreekstudybuddy/issues"
   },
-  "homepage": "https://github.com/epicserve/django-base-site#readme"
+  "homepage": "https://github.com/swils23/mygreekstudybuddy#readme"
 }

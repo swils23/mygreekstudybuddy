@@ -7,6 +7,6 @@ class GreekStudyAccountSetupForm(forms.Form):
     gs_userID = forms.IntegerField(required=True, widget=forms.NumberInput(attrs={"id": "gs_userID"}))
 
     # set field labels
-    gs_email.label = "Greek Study Email"
-    gs_password.label = "Greek Study Password"
-    gs_userID.label = "Greek Study User ID"
+    gs_email.label = "GreekStudy Email"
+    gs_password.label = "GreekStudy Password"
+    gs_userID.label = "GreekStudy User ID"
