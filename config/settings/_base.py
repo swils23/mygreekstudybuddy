@@ -32,7 +32,8 @@ DEBUG = env.bool("DEBUG", default=False)
 
 ALLOWED_HOSTS = env.list(
     "ALLOWED_HOSTS",
-    default=["localhost", "greekstudy.tcno.xyz", "tcno.xyz", "herokuapp.com"],
+    # default=["localhost", "greekstudy.tcno.xyz", "tcno.xyz", "herokuapp.com"],
+    default=["*"],
 )
 INTERNAL_IPS = env.list("INTERNAL_IPS", default=["127.0.0.1"])
 
@@ -250,6 +251,8 @@ EMAIL_HOST_PASSWORD = email["EMAIL_HOST_PASSWORD"]
 EMAIL_HOST_USER = email["EMAIL_HOST_USER"]
 EMAIL_USE_TLS = email["EMAIL_USE_TLS"]
 
+PORT = env.int("PORT", default=8080)
+
 DEBUG_LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
@@ -303,6 +306,7 @@ if IS_DEBUG_LOGGING_ON is True:
 
 # MAINTENANCE MODE SETTINGS
 MAINTENANCE_MODE_STATE_BACKEND = "maintenance_mode.backends.CacheBackend"
-MAINTENANCE_MODE_STATE_BACKEND_FALLBACK_VALUE = True
+MAINTENANCE_MODE = env.bool("MAINTENANCE_MODE", default=False)
+MAINTENANCE_MODE_STATE_BACKEND_FALLBACK_VALUE = False
 
 VITE_DEV_MODE = env.bool("VITE_DEV_MODE", default=DEBUG)
