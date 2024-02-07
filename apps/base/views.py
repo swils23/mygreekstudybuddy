@@ -24,7 +24,7 @@ def http_404(request):
 
 
 @method_decorator(csrf_exempt, name="dispatch")
-class TriggerTaskView(LoginRequiredMixin, generic.View):
+class TriggerGetUserIDView(LoginRequiredMixin, generic.View):
     def post(self, request, *args, **kwargs):
         data = json.loads(request.body)
         gs_email = data.get("gs_email")

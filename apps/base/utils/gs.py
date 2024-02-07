@@ -96,7 +96,7 @@ class GreekStudy:
 
         if userID:
             for user in self.users:
-                if user["id"] == userID:
+                if user["id"] == str(userID):
                     return user
         if first and last:
             for user in self.users:
