@@ -13,11 +13,8 @@
     {% csrf_token %}
     <label for="hours">
       Add Hours:
-      <input type="number" name="hours" min="0" max="9" step="1">
+      <input type="number" name="hours" min="0" step="1">
     </label>
     <input type="submit" value="Add">
   </form>
-  <p>
-    <sub>NOTE: you can only add 1-9 hours at a time</sub>
-  </p>
 {% endblock content %}

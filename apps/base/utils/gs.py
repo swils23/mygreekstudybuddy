@@ -161,10 +161,16 @@ class GreekStudy:
                 json.dump(existing_users, f, indent=4)
 
     def post_hours(self, hours: int, minutes: int, sentUserID: int, locationID=4311) -> None:
-        # We can only post up to 10 hours at a time
-        if hours > 10 or (hours == 10 and minutes > 0):
-            print("You can only add 10 hours at a time. Will fix this eventually")
-            # TODO, add a way to add 10 hours at a time by posting multiple times
+        # if the minutes are greater than 59, we need to convert them to hours
+        if minutes > 59:
+            hours += minutes // 60
+            minutes = minutes % 60
+
+        # we can only post 9 hours at a time
+        if hours > 9:
+            for i in range(hours // 9):
+                self.post_hours(hours=9, minutes=0, sentUserID=sentUserID)
+            self.post_hours(hours=hours % 9, minutes=minutes, sentUserID=sentUserID)
             return
 
         post_url = "https://mygreekstudy.com/newManualProc.php"
