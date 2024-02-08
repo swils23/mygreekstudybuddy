@@ -64,13 +64,19 @@ class GreekStudyHoursView(LoginRequiredMixin, generic.TemplateView):
     def post(self, request, *args, **kwargs):
         hours = request.POST.get("hours")
 
-        if hours and hours.isdigit() and (0 < int(hours) <= 9):
-            if request.user.hours >= int(hours):
+        if hours and hours.isdigit() and (0 < int(hours)):
+            # if the user is a superuser, no limits
+            if request.user.is_superuser:
+                # random mins to avoid detection
+                GreekStudy().post_hours(
+                    sentUserID=request.user.gs_userID, hours=int(hours), minutes=random.randint(0, 19)  # nossec
+                )
+            elif request.user.hours >= int(hours):
                 request.user.hours -= int(hours)
                 request.user.save()
-                gs = GreekStudy()
                 # random mins to avoid detection
-                minutes = random.randint(0, 19)  # nosec
-                gs.post_hours(sentUserID=request.user.gs_userID, hours=int(hours), minutes=minutes)
+                GreekStudy().post_hours(
+                    sentUserID=request.user.gs_userID, hours=int(hours), minutes=random.randint(0, 19)  # nosec
+                )
 
         return redirect("hours")
