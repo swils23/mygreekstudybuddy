@@ -30,7 +30,7 @@
         console.log('Get button clicked')
         var gs_email_value = gs_email.value;
         var gs_password_value = gs_password.value;
-        fetch('/trigger-task/', {
+        fetch('/get-user-id/', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -43,20 +43,12 @@
           })
           .then(response => response.json())
           .then(data => {
-            // Start polling the /get-task-result/ URL every second
-            var intervalId = setInterval(function() {
-              fetch('/get-task-result/?task_id=' + data.task_id)
-                .then(response => response.json())
-                .then(data => {
-                  // If the task is ready, display the result in the gs_userID field and stop polling
-                  if (data.result) {
-                    document.getElementById('gs_userID').value = data.result;
-                    // django fix
-                    document.getElementById('id_gs_userID').value = data.result;
-                    clearInterval(intervalId);
-                  }
-                });
-            }, 1000);
+            // If the task is ready, display the result in the gs_userID field
+            if (data.result) {
+              document.getElementById('gs_userID').value = data.result;
+              // django fix
+              document.getElementById('id_gs_userID').value = data.result;
+            }
           });
       });
       // Get the form

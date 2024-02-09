@@ -34,10 +34,10 @@ DEBUG = env.bool("DEBUG", default=False)
 
 ALLOWED_HOSTS = env.list(
     "ALLOWED_HOSTS",
-    default=["localhost", "0.0.0.0", "127.0.0.1"],
+    default=["localhost", "127.0.0.1"],
 )
-INTERNAL_IPS = env.list("INTERNAL_IPS", default=["127.0.0.1", "0.0.0.0"])
-SECURE_SSL_REDIRECT = env.bool("SECURE_SSL_REDIRECT", default=IS_PROD) # Redirect to HTTPS
+INTERNAL_IPS = env.list("INTERNAL_IPS", default=["127.0.0.1"])
+SECURE_SSL_REDIRECT = env.bool("SECURE_SSL_REDIRECT", default=IS_PROD)  # Redirect to HTTPS
 
 # Get the IP to use for Django Debug Toolbar when developing with docker
 if env.bool("USE_DOCKER", default=False) is True:
@@ -205,8 +205,8 @@ if USE_REDIS is True:
     }
 else:
     CACHES = {
-        'default': {
-            'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+        "default": {
+            "BACKEND": "django.core.cache.backends.dummy.DummyCache",
         }
     }
 
@@ -221,7 +221,9 @@ if USE_REDIS is True:
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 
-SESSION_ENGINE = "django.contrib.sessions.backends.db" if USE_REDIS is False else "django.contrib.sessions.backends.cache"
+SESSION_ENGINE = (
+    "django.contrib.sessions.backends.db" if USE_REDIS is False else "django.contrib.sessions.backends.cache"
+)
 
 SITE_ID = 1
 SITE_NAME = "GreekStudyBuddy"

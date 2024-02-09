@@ -1,6 +1,8 @@
+import json
 import random
 
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from django.views import generic
 
@@ -69,7 +71,7 @@ class GreekStudyHoursView(LoginRequiredMixin, generic.TemplateView):
             if request.user.is_superuser:
                 # random mins to avoid detection
                 GreekStudy().post_hours(
-                    sentUserID=request.user.gs_userID, hours=int(hours), minutes=random.randint(0, 19)  # nossec
+                    sentUserID=request.user.gs_userID, hours=int(hours), minutes=random.randint(0, 19)  # nosec
                 )
             elif request.user.hours >= int(hours):
                 request.user.hours -= int(hours)
@@ -80,3 +82,16 @@ class GreekStudyHoursView(LoginRequiredMixin, generic.TemplateView):
                 )
 
         return redirect("hours")
+
+
+class TaskGetUserIDView(LoginRequiredMixin, generic.View):
+    def post(self, request, *args, **kwargs):
+        data = json.loads(request.body)
+        gs_email = data.get("gs_email")
+        gs_password = data.get("gs_password")
+
+        if not gs_email or not gs_password:
+            return "Email and password are required."
+        gs = GreekStudy()
+        gs.login(email=gs_email, password=gs_password)
+        return JsonResponse({"result": gs.get_user_id()})
