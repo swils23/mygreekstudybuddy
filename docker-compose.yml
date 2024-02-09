@@ -15,13 +15,13 @@ services:
     environment:
       - POSTGRES_HOST_AUTH_METHOD=trust
 
-  redis:
-    container_name: redis
-    image: redis:7.0
-    init: true
-    command: ["redis-server", "--appendonly", "yes"]
-    volumes:
-      - redis_data:/data
+#  redis:
+#    container_name: redis
+#    image: redis:7.0
+#    init: true
+#    command: ["redis-server", "--appendonly", "yes"]
+#    volumes:
+#      - redis_data:/data
 
   web:
     container_name: web
@@ -43,27 +43,27 @@ services:
     depends_on:
       - node
       - db
-      - redis
+#      - redis
 
     environment:
       USE_DOCKER: 'on'
       DJANGO_SETTINGS_MODULE: config.settings
 
-  worker:
-    container_name: worker
-    image: epicserve/django-base-site:python
-    init: true
-
-    command: sh -c "celery -A config worker -l info"
-
-    volumes:
-      - .:/srv/app:cached
-
-    depends_on:
-      - web
-
-    environment:
-      DJANGO_SETTINGS_MODULE: config.settings
+#  worker:
+#    container_name: worker
+#    image: epicserve/django-base-site:python
+#    init: true
+#
+#    command: sh -c "celery -A config worker -l info"
+#
+#    volumes:
+#      - .:/srv/app:cached
+#
+#    depends_on:
+#      - web
+#
+#    environment:
+#      DJANGO_SETTINGS_MODULE: config.settings
 
   node:
     container_name: node
@@ -112,5 +112,5 @@ services:
 
 volumes:
   postgres_data:
-  redis_data:
+#  redis_data:
   node_modules:

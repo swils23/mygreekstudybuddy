@@ -24,6 +24,7 @@ if READ_DOT_ENV_FILE is True:
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 INSTANCE_SLUG = env("INSTANCE_SLUG", default="DEV")
+IS_PROD = INSTANCE_SLUG == "PROD"
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env("SECRET_KEY")
@@ -36,7 +37,7 @@ ALLOWED_HOSTS = env.list(
     default=["localhost", "0.0.0.0", "127.0.0.1"],
 )
 INTERNAL_IPS = env.list("INTERNAL_IPS", default=["127.0.0.1", "0.0.0.0"])
-SECURE_SSL_REDIRECT = env.bool("SECURE_SSL_REDIRECT", default=True) # Redirect to HTTPS
+SECURE_SSL_REDIRECT = env.bool("SECURE_SSL_REDIRECT", default=IS_PROD) # Redirect to HTTPS
 
 # Get the IP to use for Django Debug Toolbar when developing with docker
 if env.bool("USE_DOCKER", default=False) is True:
