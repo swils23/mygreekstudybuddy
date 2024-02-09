@@ -23,6 +23,7 @@ if READ_DOT_ENV_FILE is True:
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
+INSTANCE_SLUG = env("INSTANCE_SLUG", default="DEV")
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env("SECRET_KEY")
@@ -32,10 +33,10 @@ DEBUG = env.bool("DEBUG", default=False)
 
 ALLOWED_HOSTS = env.list(
     "ALLOWED_HOSTS",
-    # default=["localhost", "greekstudy.tcno.xyz", "tcno.xyz", "herokuapp.com"],
-    default=["*"],
+    default=["localhost", "0.0.0.0", "127.0.0.1"],
 )
 INTERNAL_IPS = env.list("INTERNAL_IPS", default=["127.0.0.1"])
+SECURE_SSL_REDIRECT = env.bool("SECURE_SSL_REDIRECT", default=True) # Redirect to HTTPS
 
 # Get the IP to use for Django Debug Toolbar when developing with docker
 if env.bool("USE_DOCKER", default=False) is True:
@@ -190,27 +191,36 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # CACHE SETTINGS
 # Redis scheme docs: https://redis-py.readthedocs.io/en/stable/connections.html#redis.connection.ConnectionPool.from_url
-REDIS_URL = env("REDIS_URL", "redis://redis:6379/0")
-REDIS_PREFIX = env("REDIS_PREFIX", default="")
-CACHES = {
-    "default": {
-        "BACKEND": "django.core.cache.backends.redis.RedisCache",
-        "LOCATION": REDIS_URL,
-        "KEY_PREFIX": REDIS_PREFIX,
+USE_REDIS = env.bool("USE_REDIS", default=False)
+if USE_REDIS is True:
+    REDIS_URL = env("REDIS_URL", "redis://redis:6379/0")
+    REDIS_PREFIX = env("REDIS_PREFIX", default="")
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.redis.RedisCache",
+            "LOCATION": REDIS_URL,
+            "KEY_PREFIX": REDIS_PREFIX,
+        }
     }
-}
+else:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+        }
+    }
 
 # CELERY SETTINGS
 # Celery configuration docs: https://docs.celeryq.dev/en/stable/getting-started/backends-and-brokers/redis.html#configuration
-CELERY_BROKER_URL = REDIS_URL
-CELERY_BROKER_TRANSPORT_OPTIONS = {"global_keyprefix": REDIS_PREFIX}
-CELERY_RESULT_BACKEND = "rpc://"
+if USE_REDIS is True:
+    CELERY_BROKER_URL = REDIS_URL
+    CELERY_BROKER_TRANSPORT_OPTIONS = {"global_keyprefix": REDIS_PREFIX}
+    CELERY_RESULT_BACKEND = "rpc://"
 
 # CRISPY-FORMS
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 
-SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_ENGINE = "django.contrib.sessions.backends.db" if USE_REDIS is False else "django.contrib.sessions.backends.cache"
 
 SITE_ID = 1
 SITE_NAME = "GreekStudyBuddy"
