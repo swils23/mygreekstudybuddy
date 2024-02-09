@@ -1,15 +1,18 @@
 {% extends "layouts/base.html" %}
 
 {% block content %}
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="button" id="getButton">Get</button>
-    <p>
-      <sub>If no ID shows up after clicking `Get`, your username/password are probably incorrect</sub>
-    </p>
-    <button type="submit" id="submitButton">Submit</button>
-  </form>
+  <div class="c-jumbotron w-50">
+    <p><b>IMPORTANT:</b> Make sure you've logged at least 1 minute this week before logging in. Failing to do so will cause the 'Get' button to break.</p>
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="button" id="getButton">Get</button>
+      <p>
+        <sub>If no ID shows up after clicking `Get`, your username/password are probably incorrect</sub>
+      </p>
+      <button type="submit" id="submitButton">Submit</button>
+    </form>
+  </div>
 {% endblock content %}
 
 {% block script %}
