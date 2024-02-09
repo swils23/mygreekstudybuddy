@@ -13,6 +13,9 @@
   {% else %}
     <div class="c-jumbotron w-50">
       <a href="{% url "hours" %}" class="btn btn-primary px-5">Add Hours</a>
+      {% if request.user.is_superuser %}
+        <a href="{% url "users" %}" class="btn btn-primary px-5">View Users</a>
+      {% endif %}
     </div>
   {% endif %}
 {% endblock content %}

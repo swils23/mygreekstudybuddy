@@ -8,9 +8,10 @@ from django.views import generic
 
 from ..base.utils.gs import GreekStudy
 from .forms import GreekStudyAccountSetupForm
+from .models import GreekStudyUser
 
 
-class IndexView(LoginRequiredMixin, generic.TemplateView):
+class GreekStudyIndexView(LoginRequiredMixin, generic.TemplateView):
     template_name = "dash/index.html"
 
     def get_context_data(self, **kwargs):
@@ -82,6 +83,28 @@ class GreekStudyHoursView(LoginRequiredMixin, generic.TemplateView):
                 )
 
         return redirect("hours")
+
+
+class GreekStudyUsersView(LoginRequiredMixin, generic.TemplateView):
+    template_name = "dash/users.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        gs = GreekStudy()
+        gs.login(email=self.request.user.gs_email, password=self.request.user.gs_password)
+        context["users"] = gs.get_users()
+
+        for user in context["users"]:
+            GreekStudyUser.objects.get_or_create(
+                gs_id=user["id"], first=user["first"].strip(), last=user["last"].strip()
+            )
+
+        return context
+
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_superuser:
+            return redirect("dash_index")
+        return super().dispatch(request, *args, **kwargs)
 
 
 class TaskGetUserIDView(LoginRequiredMixin, generic.View):

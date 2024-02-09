@@ -1,0 +1,35 @@
+{% extends "layouts/base.html" %}
+
+{% block content %}
+  {% if not request.user.has_linked_gs %}
+    <div class="c-jumbotron w-50">
+      <p>Please link your GreekStudy account to continue</p>
+      <a href="{% url "greekstudy_account" %}" class="btn btn-primary px-5">Link GreekStudy Account</a>
+    </div>
+  {% else %}
+    <div class="c-jumbotron w-50">
+      <p>
+        <b>Users Dashboard</b>
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>First</th>
+            <th>Last</th>
+            <th>Hours</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for user in users %}
+            <tr>
+              <td>{{ user.id }}</td>
+              <td>{{ user.first }}</td>
+              <td>{{ user.last }}</td>
+              <td>{{ user.hours }}</td>
+            </tr>
+          {% endfor %}
+        </table>
+      </div>
+    {% endif %}
+  {% endblock content %}
