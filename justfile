@@ -211,3 +211,15 @@ open_coverage:
     if [[ -n $volumes ]]; then \
         docker volume rm $volumes; \
     fi
+
+@release_app app:
+    docker build -t registry.heroku.com/greekstudybuddy/{{ app }} -f config/docker/Dockerfile.{{ app }} . --platform linux/amd64 \
+    && docker push registry.heroku.com/greekstudybuddy/{{ app }} \
+    && heroku container:release {{ app }} -a greekstudybuddy
+
+@release:
+    docker build -t registry.heroku.com/greekstudybuddy/web -f config/docker/Dockerfile.web . --platform linux/amd64 \
+    && docker build -t registry.heroku.com/greekstudybuddy/web -f config/docker/Dockerfile.node . --platform linux/amd64 \
+    && docker push registry.heroku.com/greekstudybuddy/web \
+    && docker push registry.heroku.com/greekstudybuddy/node \
+    && heroku container:release web node -a greekstudybuddy

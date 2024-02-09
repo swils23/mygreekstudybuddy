@@ -89,10 +89,11 @@ RUN set -ex \
 
 COPY --chown=app:app . .
 
-USER app
-
 RUN SECRET_KEY=e python manage.py collectstatic --no-input
+
+USER app
 
 COPY --from=js_assets --chown=app:app /srv/app/public/static/ ./collected_static
 
-CMD ["uwsgi", "--ini", "config/uwsgi.ini", "--http", "0.0.0.0:8080"]
+#CMD ["uwsgi", "--ini", "config/uwsgi.ini", "--http", "0.0.0.0:8080"]
+CMD uwsgi --ini config/uwsgi.ini --http 0.0.0.0:$PORT

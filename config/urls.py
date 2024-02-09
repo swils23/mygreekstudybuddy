@@ -6,8 +6,8 @@ from django.urls import URLPattern, URLResolver, include, path
 from django.views.generic import TemplateView
 
 from apps.accounts.views import NameChange
-from apps.base.views import GetTaskResultView, TriggerGetUserIDView, http_404, http_500
-from apps.dash.views import GreekStudyAccountSetupView, GreekStudyHoursView, IndexView
+from apps.base.views import http_404, http_500
+from apps.dash.views import GreekStudyAccountSetupView, GreekStudyHoursView, IndexView, TaskGetUserIDView
 
 # Includes
 urlpatterns: list[Union[URLResolver, URLPattern]] = [path(r"admin/", admin.site.urls)]
@@ -23,8 +23,7 @@ urlpatterns += [
     path("dash/", IndexView.as_view(), name="dash_index"),
     path("greekstudy-account/", GreekStudyAccountSetupView.as_view(), name="greekstudy_account"),
     path("hours/", GreekStudyHoursView.as_view(), name="hours"),
-    path("trigger-task/", TriggerGetUserIDView.as_view(), name="trigger-task"),
-    path("get-task-result/", GetTaskResultView.as_view(), name="get-task-result"),
+    path("get-user-id/", TaskGetUserIDView.as_view(), name="get-user-id"),
 ]
 
 # Debug/Development URLs
