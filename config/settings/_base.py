@@ -35,7 +35,7 @@ ALLOWED_HOSTS = env.list(
     "ALLOWED_HOSTS",
     default=["localhost", "0.0.0.0", "127.0.0.1"],
 )
-INTERNAL_IPS = env.list("INTERNAL_IPS", default=["127.0.0.1"])
+INTERNAL_IPS = env.list("INTERNAL_IPS", default=["127.0.0.1", "0.0.0.0"])
 SECURE_SSL_REDIRECT = env.bool("SECURE_SSL_REDIRECT", default=True) # Redirect to HTTPS
 
 # Get the IP to use for Django Debug Toolbar when developing with docker
