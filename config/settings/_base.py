@@ -252,6 +252,8 @@ ACCOUNT_ADAPTER = "apps.accounts.auth_adapter.AccountAdapter"
 ACCOUNT_SIGNUP_OPEN = False
 ACCOUNT_SHOW_POST_LOGIN_MESSAGE = False
 
+LOGIN_URL = "account_login"
+
 # See https://github.com/migonzalvar/dj-email-url for more examples on how to set the EMAIL_URL
 email = env.dj_email_url(
     "EMAIL_URL",

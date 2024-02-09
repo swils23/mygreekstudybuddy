@@ -5,6 +5,9 @@
     {% csrf_token %}
     {{ form.as_p }}
     <button type="button" id="getButton">Get</button>
+    <p>
+      <sub>If no ID shows up after clicking `Get`, your username/password are probably incorrect</sub>
+    </p>
     <button type="submit" id="submitButton">Submit</button>
   </form>
 {% endblock content %}

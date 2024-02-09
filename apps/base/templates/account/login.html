@@ -10,24 +10,9 @@
 
 {% block content %}
   <h1>{% trans "Sign In" %}</h1>
-  {% if socialaccount.providers %}
-    <p>
-      {% blocktrans with site.name as site_name %}Please sign in with one
-of your existing third party accounts. Or, <a href="{{ signup_url }}">sign up</a>
-for a {{site_name}} account and sign in
-below:{% endblocktrans %}
-    </p>
-    <div class="socialaccount_ballot">
-      <ul class="socialaccount_providers">
-        {% include "socialaccount/snippets/provider_list.html" with process="login" %}
-      </ul>
-      <div class="login-or">{% trans "or" %}</div>
-    </div>
-    {% include "socialaccount/snippets/login_extra.html" %}
-  {% endif %}
+  <hr>
   <p>
-    {% blocktrans %}If you have not created an account yet, then please
-<a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}
+    <b>If you don't have an account yet, reach out to kimball_dx on Discord.</b>
   </p>
   <form class="login" method="post" action="{% url 'account_login' %}">
     {% csrf_token %}
@@ -39,7 +24,6 @@ below:{% endblocktrans %}
     {% endif %}
     <div class="form-actions">
       <button class="btn btn-primary" type="submit">{% trans "Sign In" %}</button>
-      <a class="btn" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
     </div>
   </form>
 {% endblock content %}
