@@ -34,21 +34,17 @@ class GreekStudy:
         url = "https://mygreekstudy.com/data.php"
         self.r = session.get(url, headers=headers, timeout=self.TIMEOUT)
         data = json.loads(self.r.text)
-        # data = [{'id': '265609', 'member': 'Dylan Gunn', 'hours': '13.23'}, {'id': '220046', 'member': 'Josh Mercer', 'hours': '12.50'} ...
         # want to transform into a list of dicts
         """
-            [
+        [
             {
-                "first": "Dylan",
-                "last": "Gunn",
-                "id": 265609,
+                "first": "Firstname",
+                "last": "Lastname",
+                "id": 123456,
                 "hours": 13.23
             },
             {
-                "first": "Josh",
-                "last": "Mercer",
-                "id": 220046,
-                "hours": 12.50
+                ...
             }
         ]
         """
